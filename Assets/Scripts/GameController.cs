@@ -20,9 +20,11 @@ namespace CCGames
 		public void CreatePlayer()
 		{
 			Player?.Kill();
-			CharacterController.CreatePlayer(FieldController.I.transform, SetPlayer);
-			UIManager.I.AddOnMoveCallback(Player.OnMove);
-			UIManager.I.AddOnAttackCallback(Player.OnStartAttack);
+			PlayerController.Create(FieldController.I.transform, player => {
+				SetPlayer(player);
+				UIManager.I.AddOnMoveCallback(Player.OnMove);
+				UIManager.I.AddOnAttackCallback(Player.OnStartAttack);
+			});
 		}
 
 		public void CreateEnemy(Vector2 startPos)

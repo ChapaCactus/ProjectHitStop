@@ -11,6 +11,7 @@ namespace CCGames
 		public EnemyID Identifier;
 
 		public string TargetTag = "";
+		public string PrefabName = "";
 
 		public int Health = 0;
 		public int MaxHealth = 0;
@@ -23,13 +24,15 @@ namespace CCGames
 
 		public void ResetHealth() => Health = MaxHealth;
 
-		public string PrefabPath => "Prefabs/Character/Character";
+		public string PrefabPath => $"Prefabs/Character/{PrefabName}";
 
 		public static CharacterModel CreateEnemyData(EnemyID id)
 		{
 			var model = new CharacterModel();
+
 			model.Identifier = id;
 			model.TargetTag = "Player";
+			model.PrefabName = "Character";
 
 			model.MaxHealth = 1;
 			model.ResetHealth();
@@ -42,7 +45,9 @@ namespace CCGames
 		public static CharacterModel CreatePlayerData()
 		{
 			var model = new CharacterModel();
+
 			model.TargetTag = "Enemy";
+			model.PrefabName = "Player";
 
 			model.MaxHealth = 1;
 			model.ResetHealth();

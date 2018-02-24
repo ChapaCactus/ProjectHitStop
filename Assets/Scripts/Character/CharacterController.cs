@@ -12,31 +12,24 @@ namespace CCGames
 	public class CharacterController : MonoBehaviour, IHitStop
 	{
 		[SerializeField]
-		private AttackBox _attackBox;
+		protected AttackBox _attackBox;
 
 		[SerializeField]
-		private HitBox _hitbox;
+		protected HitBox _hitbox;
 
 		[SerializeField]
-		private Rigidbody2D _rigid2D;
+		protected Rigidbody2D _rigid2D;
 
-		private Tween _moveTween = null;
+		protected Tween _moveTween = null;
 
 		public bool IsPlayable => _model.IsPlayable;
 		public bool IsHitStopping => _model.IsHitStopping;
 		public bool IsAttacking => _model.IsAttacking;
 
-		private CharacterModel _model { get; set; }
-		private CharacterView _view { get; set; }
+		protected CharacterModel _model { get; set; }
+		protected CharacterView _view { get; set; }
 
-		private Vector2 _moveDirection { get; set; } = Vector2.zero;
-
-		public static void CreatePlayer(Transform parent, Action<CharacterController> onCreate)
-		{
-			var model = CharacterModel.CreatePlayerData();
-
-			Create(model, parent, Vector2.zero, onCreate);
-		}
+		protected Vector2 _moveDirection { get; set; } = Vector2.zero;
 
 		public static void Create(CharacterModel model, Transform parent, Vector2 startPos, Action<CharacterController> onCreate)
 		{
@@ -90,22 +83,8 @@ namespace CCGames
 			_moveDirection = move;
 		}
 
-		public void OnStartAttack()
+		public virtual void OnStartAttack()
 		{
-			_model.IsAttacking = true;
-
-			_attackBox.SetEnable(true);
-			var moveX = 0;
-			if (_moveDirection.x < 0) moveX = -1;
-			if (_moveDirection.x > 0) moveX = 1;
-			var moveY = 0;
-			if (_moveDirection.y < 0) moveY = -1;
-			if (_moveDirection.y > 0) moveY = 1;
-
-			_moveTween = transform.DOLocalMove(new Vector2(moveX, moveY) * 128, 0.1f)
-					 .SetEase(Ease.Linear)
-					 .SetRelative()
-					 .OnComplete(OnEndAttack);
 		}
 
 		public void OnEndAttack()
