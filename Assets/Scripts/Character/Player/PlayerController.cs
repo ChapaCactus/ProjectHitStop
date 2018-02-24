@@ -17,7 +17,6 @@ namespace CCGames
 			Create(model, parent, Vector2.zero, player => onCreate.SafeCall(player as PlayerController));
 		}
 
-
 		public override void OnStartAttack()
 		{
 			_model.IsAttacking = true;
